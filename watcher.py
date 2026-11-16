@@ -17,7 +17,7 @@ def text_of(page):
     page = re.sub(r"(?s)<[^>]+>", " ", page)
     return re.sub(r"\s+", " ", html.unescape(page))
 
-def notify(title, message, url=None, priority="high"):
+def notify(title, message, url=None, priority="urgent"):
     headers = {"Title": title, "Priority": priority, "Tags": "briefcase"}
     if url:
         headers["Click"] = url
@@ -32,7 +32,7 @@ ids = sorted(set(re.findall(r"/jobs/description/(\d+)", page)))
 if os.environ.get("MANUAL") == "true":
     notify("Job watcher is running",
            f"Test OK. {len(ids)} Southampton jobs listed right now.",
-           priority="default")
+           priority="urgent")
 
 if os.path.exists(SEEN_FILE):
     seen = set(json.load(open(SEEN_FILE)))
